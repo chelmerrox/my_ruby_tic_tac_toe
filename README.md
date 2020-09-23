@@ -8,7 +8,7 @@
 
 ## Built With
 
-- Ruby (version <= 2.7.0p0>)
+- Ruby (version <= 2.7.0p0)
 
 ## Prerequisites
 
@@ -27,6 +27,7 @@ From your command line, do the folowing steps below:
 $ git clone git@github.com:chelmerrox/my_ruby_tic_tac_toe.git
 
 ```
+
 2. Change directory/Go into the repository with the command below.
 
 ```bash
