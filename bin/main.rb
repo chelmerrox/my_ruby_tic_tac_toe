@@ -53,7 +53,7 @@
     player_two_name
   end
 
-  #define the display_board that prints/displays the board of the game
+  #define the display_board(position) method that prints/displays the board of the game
   def display_board(position)
     puts "#{position[0]} | #{position[1]} | #{position[2]}"
     puts '_   _   _'
@@ -62,6 +62,17 @@
     puts '_   _   _'
     puts ''
     puts "#{position[6]} | #{position[7]} | #{position[8]}"
+  end
+
+  #define the ask_for_number_repeatedly(player_choice) method to repetitively ask the player to give a 
+  #number/digit from 1-9
+  def ask_for_number_repeatedly(player_choice)
+    until player_choice != '' && player_choice.match(/[1-9]+/)
+      puts "Please enter a position from 1-9 as your choice: "
+      player_choice = gets.chomp
+    end
+    
+    player_choice.to_i
   end
 
 #----------------------------------------
@@ -148,12 +159,20 @@ position = [1,2,3,4,5,6,7,8,9]
 
 puts ''
 
-# print/display the board
-display_board(position)
-
 # create a loop that keeps playing the game when there's no winner or when there is no draw
+#loop do
+   # print/display the board
+   display_board(position)
 
    # ask for player_one's choice
+   puts "Make your move, #{player_one_name}"
+   player_one_choice  = gets.chomp
+
+   # call the ask_for_number method that checks that player_one gives a number from 1-9
+   player_one_choice = ask_for_number_repeatedly(player_one_choice) unless player_one_choice != '' && player_one_choice.match(/[1-9]+/)
+
+    puts "player_one_choice: #{player_one_choice}"
+    puts "player_one_choice is an integer? #{player_one_choice.is_a?(Integer)}"
 
    # player one gives choice from the postions in the board
 
@@ -177,6 +196,8 @@ display_board(position)
 
    # print the updated board
 # end of the loop
+#break if !is_a_win? || !is_a_draw?
+#end
 
 # if there is a winner, print message to congratulate the winner
 
