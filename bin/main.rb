@@ -18,36 +18,31 @@
       puts 'Please enter either X or O as your symbol:'
       player_symbol = gets.chomp
     end
+
     player_symbol
   end
 
   #define assign_player_two_symbol which checks for the player_one_symbol chosen and determines 
   #which symbol should be assigned to player two
   def assign_player_two_symbol(player_symbol)
-    player_two_symbol = 'O'
+    player_symbol_two = 'O'
     
-    if player_symbol == 'O'
-      player_two_symbol = 'X'
-    end
+    player_symbol_two = 'X' if player_symbol == 'O'
 
-    player_two_symbol
+    player_symbol_two
   end
 
   #define ask_for_different_name method which is to repetitively ask player_two 
   #to give a different name if it's the same as player_one's name
   def ask_for_different_name(player_one_name, player_two_name)
-    while player_two_name.eql?(player_one_name)
-      puts "You have the same name as #{player_one_name}!"
-      puts "Please enter a different name to avoid confusion, player two: "
-      player_two_name = gets.chomp
-    end
-
-    player_two_name = ask_for_name_repeatedly(player_two_name) if player_two_name == ''
-
-    while player_two_name.eql?(player_one_name)
-      puts "You have the same name as #{player_one_name}!"
-      puts "Please enter a different name to avoid confusion, player two: "
-      player_two_name = gets.chomp
+    while player_two_name == '' || player_two_name.eql?(player_one_name)
+      if player_two_name == ''
+        player_two_name = ask_for_name_repeatedly(player_two_name)
+      else
+        puts "You have the same name as #{player_one_name}!"
+        puts 'Please enter a different name to avoid confusion, player two: '
+        player_two_name = gets.chomp
+      end
     end
 
     player_two_name
@@ -67,8 +62,8 @@
   #define the ask_for_number_repeatedly(player_choice) method to repetitively ask the player to give a 
   #number/digit from 1-9
   def ask_for_number_repeatedly(player_choice)
-    until player_choice != '' && player_choice.match(/[1-9]+/)
-      puts "Please enter a position from 1-9 as your choice: "
+    until player_choice != '' && player_choice.match(/^[1-9]$+/)
+      puts 'Please enter a position from 1-9 as your choice: '
       player_choice = gets.chomp
     end
     
@@ -138,11 +133,7 @@ puts ''
 # if player_two's name is the same as player_one's, then call the ask_for_different_name method
 # player_two_name = ask_for_different_name(player_one_name, player_two_name) if (player_two_name).eql?(player_one_name)
 
-if player_two_name == ''
-  player_two_name = ask_for_name_repeatedly(player_two_name)
-elsif (player_two_name).eql?(player_one_name)
-  player_two_name = ask_for_different_name(player_one_name, player_two_name)
-end  
+player_two_name = ask_for_different_name(player_one_name, player_two_name) if player_two_name == '' || (player_two_name).eql?(player_one_name)
 
 puts ''
 
@@ -166,15 +157,20 @@ puts ''
 
    # ask for player_one's choice
    puts "Make your move, #{player_one_name}"
+   
+   # player one gives choice
    player_one_choice  = gets.chomp
 
-   # call the ask_for_number method that checks that player_one gives a number from 1-9
-   player_one_choice = ask_for_number_repeatedly(player_one_choice) unless player_one_choice != '' && player_one_choice.match(/[1-9]+/)
+  # if player_one_choice is either an empty string or isn't a digit from 1-9,
+  if player_one_choice == '' || !player_one_choice.match(/^[1-9]$+/)
+    # then call the ask_for_number method that checks that player_one gives a number from 1-9
+    player_one_choice = ask_for_number_repeatedly(player_one_choice)
+  else
+    player_one_choice = player_one_choice.to_i
+  end
 
-    puts "player_one_choice: #{player_one_choice}"
-    puts "player_one_choice is an integer? #{player_one_choice.is_a?(Integer)}"
-
-   # player one gives choice from the postions in the board
+   puts "player_one_choice: #{player_one_choice}"
+   puts "player_one_choice is an integer? #{player_one_choice.is_a?(Integer)}"
 
    # ask for player_one's choice again if position has been taken
 
