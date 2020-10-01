@@ -137,6 +137,12 @@ player_two_name = ask_for_different_name(player_one_name, player_two_name) if pl
 
 puts ''
 
+players = { player_one_name => player_one_symbol, player_two_name => player_two_symbol }
+
+puts "Players keys: #{players.keys} and Players values: #{players.values}"
+
+puts ''
+
 # print a message for player two to remind him/her of which symbol is assigned to him/her
 puts "Great! Now, #{player_two_name}, you'll use the #{player_two_symbol} symbol in this game. (Press any key to continue)"
 answer = gets.chomp
@@ -150,16 +156,19 @@ position = [1,2,3,4,5,6,7,8,9]
 
 puts ''
 
-# create a loop that keeps playing the game when there's no winner or when there is no draw
+# create a loop that keeps playing the game when there's no winner yet or when there is no draw yet
 #loop do
+loop do 
    # print/display the board
    display_board(position)
+
+   puts ''
 
    # ask for player_one's choice
    puts "Make your move, #{player_one_name}"
    
    # player one gives choice
-   player_one_choice  = gets.chomp
+   player_one_choice = gets.chomp
 
   # if player_one_choice is either an empty string or isn't a digit from 1-9,
   if player_one_choice == '' || !player_one_choice.match(/^[1-9]$+/)
@@ -172,27 +181,50 @@ puts ''
    puts "player_one_choice: #{player_one_choice}"
    puts "player_one_choice is an integer? #{player_one_choice.is_a?(Integer)}"
 
+   puts ''
+
    # ask for player_one's choice again if position has been taken
 
    # fill the cell in the board with player_one_symbol according to position player_one chose
+   position = position.each_with_index { |cell, index| position[index] = player_one_symbol if player_one_choice == cell }
 
    # update the board
 
    # print the updated board
+   display_board(position)
+
+   break if position.none? { |cell| cell.is_a?(Integer) }
 
    # ask for player_two's choice
+   puts "Your turn, #{player_two_name}"
 
    # player two gives choice
+   player_two_choice = gets.chomp
+
+   # if player_two_choice is either an empty string or isn't a digit from 1-9,
+  if player_two_choice == '' || !player_two_choice.match(/^[1-9]$+/)
+    # then call the ask_for_number method that checks that player_one gives a number from 1-9
+    player_two_choice = ask_for_number_repeatedly(player_two_choice)
+  else
+    player_two_choice = player_two_choice.to_i
+  end
+
+   puts "player_two_choice: #{player_two_choice}"
+   puts "player_two_choice is an integer? #{player_two_choice.is_a?(Integer)}"
+
+   puts ''
 
    # ask for player_two's choice again if position has been taken
 
    # fill the cell in the board with player_one_symbol according to position player_one chose
+   position = position.each_with_index { |cell, index| position[index] = player_two_symbol if player_two_choice == cell }
 
    # update the board
 
    # print the updated board
 # end of the loop
-#break if !is_a_win? || !is_a_draw?
+end
+#break if is_a_win? || is_a_draw?
 #end
 
 # if there is a winner, print message to congratulate the winner
