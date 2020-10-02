@@ -71,9 +71,9 @@
 
 #-----------------------------------------
 
-puts "~~~~                               ~~~~"
-puts "  ~ WELCOME TO MY TIC-TAC-TOE GAME! ~  "
-puts "~~~~                               ~~~~"
+puts '~~~~                               ~~~~'
+puts '  ~ WELCOME TO MY TIC-TAC-TOE GAME! ~  '
+puts '~~~~                               ~~~~'
 
 puts ''
 
