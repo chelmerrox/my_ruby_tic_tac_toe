@@ -29,18 +29,18 @@
   end
 
   def ask_for_different_name(player_one_name, player_two_name)
-    while player_two_name == '' || player_two_name.eql?(player_one_name)
+    while player_two_name == '' || (player_two_name.downcase).eql?(player_one_name.downcase)
       if player_two_name == ''
         player_two_name = ask_for_name_repeatedly(player_two_name)
       else
         puts ''
         puts "You have the same name as #{player_one_name}!"
         puts 'Please enter a different name to avoid confusion, player two: '
-        player_two_name = gets.chomp
+        player_two_name = gets.chomp.downcase
       end
     end
 
-    player_two_name
+    player_two_name.capitalize()
   end
 
   def display_board(position)
@@ -106,7 +106,7 @@ player_two_name = gets.chomp
 
 puts ''
 
-player_two_name = ask_for_different_name(player_one_name, player_two_name) if player_two_name == '' || (player_two_name).eql?(player_one_name)
+player_two_name = ask_for_different_name(player_one_name, player_two_name) if player_two_name == '' || (player_two_name.downcase).eql?(player_one_name.downcase)
 
 puts ''
 
@@ -157,6 +157,8 @@ loop do
 
    #break if is_a_win? || is_a_draw?; for now it breaks when the board/all position array elements are not integers
    break if position.none? { |cell| cell.is_a?(Integer) }
+
+   puts ''
 
    puts "Your turn, #{player_two_name}"
    player_two_choice = gets.chomp
