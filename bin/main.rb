@@ -44,13 +44,13 @@
   end
 
   def display_board(position)
-    puts "#{position[0]} | #{position[1]} | #{position[2]}"
-    puts '_   _   _'
+    puts "           #{position[0]} | #{position[1]} | #{position[2]}"
+    puts '           _   _   _'
     puts ''
-    puts "#{position[3]} | #{position[4]} | #{position[5]}"
-    puts '_   _   _'
+    puts "           #{position[3]} | #{position[4]} | #{position[5]}"
+    puts '           _   _   _'
     puts ''
-    puts "#{position[6]} | #{position[7]} | #{position[8]}"
+    puts "           #{position[6]} | #{position[7]} | #{position[8]}"
   end
 
   def ask_for_number_repeatedly(player_choice)
