@@ -10,9 +10,11 @@
   end
 
   def ask_for_symbol_repeatedly(player_symbol)
+    player_symbol = player_symbol.upcase
+
     until player_symbol == 'X' || player_symbol == 'O'
       puts 'Please enter either X or O as your symbol:'
-      player_symbol = gets.chomp
+      player_symbol = gets.chomp.upcase
     end
 
     player_symbol
@@ -31,6 +33,7 @@
       if player_two_name == ''
         player_two_name = ask_for_name_repeatedly(player_two_name)
       else
+        puts ''
         puts "You have the same name as #{player_one_name}!"
         puts 'Please enter a different name to avoid confusion, player two: '
         player_two_name = gets.chomp
