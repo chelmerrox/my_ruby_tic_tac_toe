@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
+#-------Variable declarations---------------
+  position = [1,2,3,4,5,6,7,8,9]
+
+#-------------------------------------------
+
+
 #--------Method definitions--------------
   def ask_for_name_repeatedly(player_name)
    while player_name == ''
@@ -53,13 +59,29 @@
     puts "           #{position[6]} | #{position[7]} | #{position[8]}"
   end
 
-  def ask_for_number_repeatedly(player_choice)
+  def ask_for_number_repeatedly(position, player_choice)
     until player_choice != '' && player_choice.match(/^[1-9]$+/)
       puts 'Please enter a position from 1-9 as your choice: '
       player_choice = gets.chomp
+
+      if player_choice != '' && player_choice.match(/^[1-9]$+/) && !position.include?(player_choice.to_i)
+        player_choice = ask_for_different_number(position, player_choice)
+      end
     end
     
-    player_choice.to_i
+    player_choice
+  end
+
+  def ask_for_different_number(position, player_choice)
+    until player_choice != '' && player_choice.match(/^[1-9]$+/) && position.include?(player_choice.to_i)
+      puts 'That position is taken. Please enter another number as your choice: '
+      player_choice = gets.chomp
+
+      if player_choice == '' || !player_choice.match(/^[1-9]$+/)
+        player_choice = ask_for_number_repeatedly(position, player_choice)
+      end
+    end
+    player_choice
   end
 
 #----------------------------------------
@@ -123,8 +145,6 @@ puts ''
 
 puts 'Here\'s the board you\'ll be using. Type in the numbers in each cell to take that position.'
 
-position = [1,2,3,4,5,6,7,8,9]
-
 puts ''
 
 # create a loop that keeps playing the game when there's no winner yet or when there is no draw yet
@@ -137,20 +157,23 @@ loop do
    player_one_choice = gets.chomp
 
   if player_one_choice == '' || !player_one_choice.match(/^[1-9]$+/)
-    player_one_choice = ask_for_number_repeatedly(player_one_choice)
+    player_one_choice = ask_for_number_repeatedly(position, player_one_choice).to_i
+  elsif player_one_choice != '' && player_one_choice.match(/^[1-9]$+/) && !position.include?(player_one_choice.to_i)
+    player_one_choice = ask_for_different_number(position, player_one_choice).to_i
   else
     player_one_choice = player_one_choice.to_i
   end
-
-   puts "player_one_choice: #{player_one_choice}"
-   puts "player_one_choice is an integer? #{player_one_choice.is_a?(Integer)}"
-
-   puts ''
 
    # ask for player_one's choice again if position has been taken
 
    # fill the cell in the board with player_one_symbol according to position player_one chose; update the board
    position = position.each_with_index { |cell, index| position[index] = player_one_symbol if player_one_choice == cell }
+
+   puts "player_one_choice: #{player_one_choice}"
+   puts "player_one_choice is an integer? #{player_one_choice.is_a?(Integer)}"
+   puts "Current position array: #{position}"
+
+   puts ''
 
    # print the updated board
    display_board(position)
@@ -164,19 +187,22 @@ loop do
    player_two_choice = gets.chomp
 
   if player_two_choice == '' || !player_two_choice.match(/^[1-9]$+/)
-    player_two_choice = ask_for_number_repeatedly(player_two_choice)
+    player_two_choice = ask_for_number_repeatedly(position, player_two_choice).to_i
+  elsif player_two_choice != '' && player_two_choice.match(/^[1-9]$+/) && !position.include?(player_two_choice.to_i)
+    player_two_choice = ask_for_different_number(position, player_two_choice).to_i
   else
     player_two_choice = player_two_choice.to_i
   end
 
-   puts "player_two_choice: #{player_two_choice}"
-   puts "player_two_choice is an integer? #{player_two_choice.is_a?(Integer)}"
+  # ask for player_two's choice again if position has been taken
 
-   puts ''
+  position = position.each_with_index { |cell, index| position[index] = player_two_symbol if player_two_choice == cell }
 
-   # ask for player_two's choice again if position has been taken
+  puts "player_two_choice: #{player_two_choice}"
+  puts "player_two_choice is an integer? #{player_two_choice.is_a?(Integer)}"
+  puts "Current position array: #{position}"
 
-   position = position.each_with_index { |cell, index| position[index] = player_two_symbol if player_two_choice == cell }
+  puts ''
 end
 
 # if there is a winner, print message to congratulate the winner
