@@ -10,7 +10,7 @@
 #--------Method definitions--------------
   def ask_for_name_repeatedly(player_name)
    while player_name == ''
-     puts 'Please enter your name: '
+     puts "\nPlease enter your name:"
      player_name = gets.chomp
    end
 
@@ -21,7 +21,7 @@
     player_symbol = player_symbol.upcase
 
     until player_symbol == 'X' || player_symbol == 'O'
-      puts 'Please enter either X or O as your symbol:'
+      puts "\nPlease enter either X or O as your symbol:"
       player_symbol = gets.chomp.upcase
     end
 
@@ -41,8 +41,7 @@
       if player_two_name == ''
         player_two_name = ask_for_name_repeatedly(player_two_name)
       else
-        puts ''
-        puts "You have the same name as #{player_one_name}!"
+        puts "\nYou have the same name as #{player_one_name}!"
         puts 'Please enter a different name to avoid confusion, player two: '
         player_two_name = gets.chomp.downcase
       end
@@ -52,18 +51,16 @@
   end
 
   def display_board(position)
-    puts "           #{position[0]} | #{position[1]} | #{position[2]}"
-    puts '           _   _   _'
-    puts ''
-    puts "           #{position[3]} | #{position[4]} | #{position[5]}"
-    puts '           _   _   _'
-    puts ''
-    puts "           #{position[6]} | #{position[7]} | #{position[8]}"
+    puts "\n\t#{position[0]} | #{position[1]} | #{position[2]}"
+    puts "\n\t_   _   _"
+    puts "\n\t#{position[3]} | #{position[4]} | #{position[5]}"
+    puts "\n\t_   _   _"
+    puts "\n\t#{position[6]} | #{position[7]} | #{position[8]}"
   end
 
   def ask_for_number_repeatedly(position, player_choice)
     until player_choice != '' && player_choice.match(/^[1-9]$+/)
-      puts 'Please enter a position from 1-9 as your choice: '
+      puts "\nPlease enter a position from 1-9 as your choice: "
       player_choice = gets.chomp
 
       if player_choice != '' && player_choice.match(/^[1-9]$+/) && !position.include?(player_choice.to_i)
@@ -76,7 +73,7 @@
 
   def ask_for_different_number(position, player_choice)
     until player_choice != '' && player_choice.match(/^[1-9]$+/) && position.include?(player_choice.to_i)
-      puts 'That position is taken. Please enter another number as your choice: '
+      puts "\nThat position is taken. Please enter another number as your choice:"
       player_choice = gets.chomp
 
       if player_choice == '' || !player_choice.match(/^[1-9]$+/)
@@ -102,8 +99,6 @@
     puts "#{player_name} is an integer? #{player_choice.is_a?(Integer)}"
     puts "Current position array: #{position}"
 
-    puts ''
-
     display_board(position)
 
     puts ''
@@ -121,72 +116,48 @@ puts '~~~~                               ~~~~'
 puts '  ~ WELCOME TO MY TIC-TAC-TOE GAME! ~  '
 puts '~~~~                               ~~~~'
 
-puts ''
-
-puts "Please enter your name, player one: "
+puts "\nPlease enter your name, player one: "
 player_one_name = gets.chomp
-
-puts ''
 
 player_one_name = ask_for_name_repeatedly(player_one_name) unless player_one_name != ''
 
-puts ''
-
-puts "Alright! Now, #{player_one_name}, please type in which symbol you want to use. 'X' or 'O':"
+puts "\nAlright! Now, #{player_one_name}, please type in which symbol you want to use. 'X' or 'O':"
 player_one_symbol = gets.chomp
-
-puts ''
 
 player_one_symbol = ask_for_symbol_repeatedly(player_one_symbol) unless player_one_symbol == 'X' || player_one_symbol == 'O'
 
-puts ''
-
 player_two_symbol = assign_player_two_symbol(player_one_symbol)
 
-puts "Player two symbol: #{player_two_symbol}"
+puts "\nPlayer two symbol: #{player_two_symbol}"
 
-puts ''
-
-puts 'Player two, please enter your name: '
+puts "\nPlayer two, please enter your name:"
 player_two_name = gets.chomp
-
-puts ''
 
 player_two_name = ask_for_different_name(player_one_name, player_two_name) if player_two_name == '' || (player_two_name.downcase).eql?(player_one_name.downcase)
 
-puts ''
-
 players = { player_one_name => player_one_symbol, player_two_name => player_two_symbol }
 
-puts "Players keys: #{players.keys} and Players values: #{players.values}"
+puts "\nPlayers keys: #{players.keys} and Players values: #{players.values}"
 
-puts ''
-
-puts "Great! Now, #{player_two_name}, you'll use the #{player_two_symbol} symbol in this game. (Press any key to continue)"
+puts "\nGreat! Now, #{player_two_name}, you'll use the #{player_two_symbol} symbol in this game. (Press any key to continue)"
 answer = gets.chomp
 
-puts ''
-
-puts 'Here\'s the board you\'ll be using. Type in the numbers in each cell to take that position.'
-
-puts ''
+puts "\nHere\'s the board you\'ll be using. Type in the numbers in each cell to take that position."
 
 display_board(position)
-
-puts ''
 
 # create a loop that keeps playing the game when there's no winner yet (!is_a_win?) or when there is no draw (!is_a_draw?) yet
 # for now, it keeps playing the game if there are still integers in the board/cells of the board
 while !position.none? { |cell| cell.is_a?(Integer) }
   if player_turn.odd?
-    puts "Make your move, #{player_one_name}"
+    puts "\nMake your move, #{player_one_name}"
     player_one_choice = gets.chomp
 
     play_game(position, player_one_name, player_one_symbol, player_one_choice)
 
     player_turn += 1
   else
-    puts "Your turn, #{player_two_name}"
+    puts "\nYour turn, #{player_two_name}"
     player_two_choice = gets.chomp
 
     play_game(position, player_two_name, player_two_symbol, player_two_choice)
