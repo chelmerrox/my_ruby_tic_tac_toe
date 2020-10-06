@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Lint/UselessAssignment
 #-------Variable declarations---------------
 board_position = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -179,3 +180,4 @@ end
 # if there is a winner (is_a_win?), print message to congratulate the winner
 
 # else if there is a draw (is_a_draw?), print a draw message
+# rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Lint/UselessAssignment
