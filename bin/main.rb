@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #-------Variable declarations---------------
-  position = [1,2,3,4,5,6,7,8,9]
+  board_position = [1,2,3,4,5,6,7,8,9]
 
   player_turn = 1
 
@@ -50,56 +50,56 @@
     player_two_name.capitalize()
   end
 
-  def display_board(position)
-    puts "\n\t#{position[0]} | #{position[1]} | #{position[2]}"
+  def display_board(board_position)
+    puts "\n\t#{board_position[0]} | #{board_position[1]} | #{board_position[2]}"
     puts "\n\t_   _   _"
-    puts "\n\t#{position[3]} | #{position[4]} | #{position[5]}"
+    puts "\n\t#{board_position[3]} | #{board_position[4]} | #{board_position[5]}"
     puts "\n\t_   _   _"
-    puts "\n\t#{position[6]} | #{position[7]} | #{position[8]}"
+    puts "\n\t#{board_position[6]} | #{board_position[7]} | #{board_position[8]}"
   end
 
-  def ask_for_number_repeatedly(position, player_choice)
+  def ask_for_number_repeatedly(board_position, player_choice)
     until player_choice != '' && player_choice.match(/^[1-9]$+/)
       puts "\nPlease enter a position from 1-9 as your choice: "
       player_choice = gets.chomp
 
-      if player_choice != '' && player_choice.match(/^[1-9]$+/) && !position.include?(player_choice.to_i)
-        player_choice = ask_for_different_number(position, player_choice)
+      if player_choice != '' && player_choice.match(/^[1-9]$+/) && !board_position.include?(player_choice.to_i)
+        player_choice = ask_for_different_number(board_position, player_choice)
       end
     end
     
     player_choice
   end
 
-  def ask_for_different_number(position, player_choice)
-    until player_choice != '' && player_choice.match(/^[1-9]$+/) && position.include?(player_choice.to_i)
+  def ask_for_different_number(board_position, player_choice)
+    until player_choice != '' && player_choice.match(/^[1-9]$+/) && board_position.include?(player_choice.to_i)
       puts "\nThat position is taken. Please enter another number as your choice:"
       player_choice = gets.chomp
 
       if player_choice == '' || !player_choice.match(/^[1-9]$+/)
-        player_choice = ask_for_number_repeatedly(position, player_choice)
+        player_choice = ask_for_number_repeatedly(board_position, player_choice)
       end
     end
     player_choice
   end
 
-  def play_game(position, player_name, player_symbol, player_choice)
+  def play_game(board_position, player_name, player_symbol, player_choice)
     if player_choice == '' || !player_choice.match(/^[1-9]$+/)
-      player_choice = ask_for_number_repeatedly(position, player_choice).to_i
-    elsif player_choice != '' && player_choice.match(/^[1-9]$+/) && !position.include?(player_choice.to_i)
-      player_choice = ask_for_different_number(position, player_choice).to_i
+      player_choice = ask_for_number_repeatedly(board_position, player_choice).to_i
+    elsif player_choice != '' && player_choice.match(/^[1-9]$+/) && !board_position.include?(player_choice.to_i)
+      player_choice = ask_for_different_number(board_position, player_choice).to_i
     else
       player_choice = player_choice.to_i
     end
 
-    # fill the cell in the board with player_one_symbol according to position player_one chose; update the board
-    position = position.each_with_index { |cell, index| position[index] = player_symbol if player_choice == cell }
+    # fill the cell/position in the board with player_one_symbol according to position player_one chose; update the board
+    board_position = board_position.each_with_index { |position, index| board_position[index] = player_symbol if player_choice == position }
 
     puts "#{player_name}: #{player_choice}"
     puts "#{player_name} is an integer? #{player_choice.is_a?(Integer)}"
-    puts "Current position array: #{position}"
+    puts "Current position array: #{board_position}"
 
-    display_board(position)
+    display_board(board_position)
 
     puts ''
   end
@@ -144,28 +144,28 @@ answer = gets.chomp
 
 puts "\nHere\'s the board you\'ll be using. Type in the numbers in each cell to take that position."
 
-display_board(position)
+display_board(board_position)
 
 # create a loop that keeps playing the game when there's no winner yet (!is_a_win?) or when there is no draw (!is_a_draw?) yet
-# for now, it keeps playing the game if there are still integers in the board/cells of the board
-while !position.none? { |cell| cell.is_a?(Integer) }
+# for now, it keeps playing the game if there are still integers in the board/positions in the board (the cells)
+while !board_position.none? { |position| position.is_a?(Integer) }
   if player_turn.odd?
     puts "\nMake your move, #{player_one_name}"
     player_one_choice = gets.chomp
 
-    play_game(position, player_one_name, player_one_symbol, player_one_choice)
+    play_game(board_position, player_one_name, player_one_symbol, player_one_choice)
 
     player_turn += 1
   else
     puts "\nYour turn, #{player_two_name}"
     player_two_choice = gets.chomp
 
-    play_game(position, player_two_name, player_two_symbol, player_two_choice)
+    play_game(board_position, player_two_name, player_two_symbol, player_two_choice)
 
     player_turn += 1
   end
 end
 
-# if there is a winner, print message to congratulate the winner
+# if there is a winner (is_a_win?), print message to congratulate the winner
 
-# else if there is a draw, print a draw message
+# else if there is a draw (is_a_draw?), print a draw message
