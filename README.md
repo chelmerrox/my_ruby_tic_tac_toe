@@ -1,6 +1,6 @@
 #  Ruby - Tic Tac Toe 
 
-> This is my own implementation of the Tic-tac-toe game. I had to build an interactive Tic-tac-toe game in Ruby where two players are required to play against each other on the terminal. This game is user-friendly and interactive. For more information on the tic-tac-toe game, you can read it <a href="https://en.wikipedia.org/wiki/Tic-tac-toe">here.</a>
+> This is my own implementation of the Tic-tac-toe game. I had to build an interactive Tic-tac-toe game in Ruby where two players are required to play against each other on the terminal. My primary focus is on applying Object-Oriented Programming (OOP) for this game. This game is user-friendly and interactive. For more information on the Tic-tac-toe game, you can read it <a href="https://en.wikipedia.org/wiki/Tic-tac-toe">here.</a>
 
 # Preview of the game
 
