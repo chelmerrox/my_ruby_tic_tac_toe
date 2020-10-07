@@ -149,7 +149,7 @@ players = { player_one_name => player_one_symbol, player_two_name => player_two_
 puts "\nPlayers keys: #{players.keys} and Players values: #{players.values}"
 
 puts "\nGreat! Now, #{player_two_name}, you'll use the #{player_two_symbol} symbol in this game."
-puts '(Press any Y to continue)'
+puts '(Press Y or y to continue)'
 answer = gets.chomp.downcase
 
 answer = ask_for_correct_input(answer) if answer == '' || !answer.eql?('y')
