@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Lint/UselessAssignment
+require_relative '../lib/board.rb'
+require_relative '../lib/verify.rb'
 #-------Variable declarations---------------
 board_position = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -94,13 +96,13 @@ end
 
 def play_game(board_position, player_name, player_symbol, player_choice)
   if player_choice == '' || !player_choice.match(/^[1-9]$+/)
-    player_choice = ask_for_number_repeatedly(board_position, player_choice).to_i
-  elsif player_choice != '' && player_choice.match(/^[1-9]$+/) && !board_position.include?(player_choice.to_i)
-    player_choice = ask_for_different_number(board_position, player_choice).to_i
+    player_choice = ask_for_number_repeatedly(board, player_choice).to_i
+  elsif player_choice != '' && player_choice.match(/^[1-9]$+/) && !board.include?(player_choice.to_i)
+    player_choice = ask_for_different_number(board, player_choice).to_i
   else
     player_choice = player_choice.to_i
   end
-
+  
   # fill the cell/position in the board with player_one_symbol according to position player_one chose;
   # update the board
   board_position = board_position.each_with_index do |position, index|
@@ -158,26 +160,36 @@ puts "\nHere\'s the board you\'ll be using. Type in the numbers in each cell to 
 
 display_board(board_position)
 
+board = Board.new(board_position)
+#board_one = Verify.new(board_position)
+
+puts ''
+
+puts "board: #{board}"
+#puts "board_one: #{board_one}"
+
 # create a loop that keeps playing the game when there's no winner yet (!is_a_win?)
 # or when there is no draw (!is_a_draw?) yet
 # for now, it keeps playing the game if there are still integers in the board/positions in the board (the cells)
-until board_position.none? { |position| position.is_a?(Integer) }
+#until board.none? { |position| position.is_a?(Integer) }
+until board.is_a_win? || board.is_a_draw?
   if player_turn.odd?
     puts "\nMake your move, #{player_one_name}"
     player_one_choice = gets.chomp
 
-    play_game(board_position, player_one_name, player_one_symbol, player_one_choice)
+    play_game(board, player_one_name, player_one_symbol, player_one_choice)
   else
     puts "\nYour turn, #{player_two_name}"
     player_two_choice = gets.chomp
 
-    play_game(board_position, player_two_name, player_two_symbol, player_two_choice)
+    play_game(board, player_two_name, player_two_symbol, player_two_choice)
   end
 
   player_turn += 1
 end
 
 # if there is a winner (is_a_win?), print message to congratulate the winner
-
-# else if there is a draw (is_a_draw?), print a draw message
+  # if board.is_a_win?, find the symbol that has made the win & correlate the symbol to the player's name
+  # (use the hash created earlier for this) and print congratulatory message for the winner
+# else if there is a draw (is_a_draw? ; board.is_a_draw?), print a draw message
 # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Lint/UselessAssignment
