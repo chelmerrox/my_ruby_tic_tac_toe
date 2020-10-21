@@ -105,15 +105,15 @@ def play_game(board_position, player_name, player_symbol, player_choice)
   
   # fill the cell/position in the board with player_one_symbol according to position player_one chose;
   # update the board
-  board_position = board_position.each_with_index do |position, index|
-    board_position[index] = player_symbol if player_choice.eql?(position)
+  board = board.each_with_index do |position, index|
+    board[index] = player_symbol if player_choice.eql?(position)
   end
 
   puts "#{player_name}: #{player_choice}"
   puts "#{player_name} is an integer? #{player_choice.is_a?(Integer)}"
-  puts "Current position array: #{board_position}"
+  puts "Current position array: #{board}"
 
-  display_board(board_position)
+  display_board(board)
 
   puts ''
 end
@@ -158,9 +158,11 @@ answer = ask_for_correct_input(answer) if answer == '' || !answer.eql?('y')
 
 puts "\nHere\'s the board you\'ll be using. Type in the numbers in each cell to take that position."
 
-display_board(board_position)
-
 board = Board.new(board_position)
+
+display_board(board)
+
+#board = Board.new(board_position)
 #board_one = Verify.new(board_position)
 
 puts ''
@@ -171,7 +173,7 @@ puts "board: #{board}"
 # create a loop that keeps playing the game when there's no winner yet (!is_a_win?)
 # or when there is no draw (!is_a_draw?) yet
 # for now, it keeps playing the game if there are still integers in the board/positions in the board (the cells)
-#until board.none? { |position| position.is_a?(Integer) }
+#until board_position.none? { |position| position.is_a?(Integer) }
 until board.is_a_win? || board.is_a_draw?
   if player_turn.odd?
     puts "\nMake your move, #{player_one_name}"
